@@ -1,0 +1,15 @@
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata:
+  name: jwt-auth
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: springboot-api  # Apply JWT validation to your backend
+  jwtRules:
+  - issuer: "https://dev-k7aqsoufpe7gmz08.us.auth0.com/"
+    audiences:
+    - "https://api.springboot-demo.com"
+    jwksUri: "https://dev-k7aqsoufpe7gmz08.us.auth0.com/.well-known/jwks.json"
+    forwardOriginalToken: true  # Pass JWT to your app if needed

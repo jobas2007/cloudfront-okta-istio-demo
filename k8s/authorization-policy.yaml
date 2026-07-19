@@ -1,0 +1,26 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: api-authorization
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: springboot-api
+  action: ALLOW
+  rules:
+    # Rule 1: Allow health checks without authentication (for Kubernetes probes)
+    - to:
+        - operation:
+            paths: [ "/api/health" ]
+
+    # Rule 2: Allow authenticated users (any valid JWT)
+    - from:
+        - source:
+            requestPrincipals: [ "*" ]  # Any authenticated user
+      when:
+        - key: request.auth.claims[roles]
+          values: [ "admin" ]
+      to:
+        - operation:
+            paths: [ "/api/*" ]

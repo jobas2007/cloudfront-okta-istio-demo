@@ -8,12 +8,13 @@ output "frontend_bucket_arn" {
   value       = module.s3.bucket_arn
 }
 
-output "ecr_repository_url" {
-  value = module.ecr.repository_url
-}
+# Outputs disabled for local minikube development
+# output "ecr_repository_url" {
+#   value = module.ecr.repository_url
+# }
 
-output "eks_cluster_name" {
-  value = module.eks.cluster_name
-}
+# output "eks_cluster_name" {
+#   value = module.eks.cluster_name
+# }
 
 

@@ -1,0 +1,32 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: springboot-api
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - springboot-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /api
+    route:
+    - destination:
+        host: springboot-api
+        port:
+          number: 8080
+    corsPolicy:
+      allowOrigins:
+      - regex: ".*"  # Allow all origins for local testing
+      allowMethods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      - OPTIONS
+      allowHeaders:
+      - content-type
+      - authorization
+      allowCredentials: true
+      maxAge: "24h"
